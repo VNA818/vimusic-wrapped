@@ -1,0 +1,52 @@
+@media screen and (max-width: 660px) {
+    html {
+        font-size: 0.9rem !important;
+    }
+
+    :root {
+        --clearTop: -6rem;
+    }
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    div {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+
+    .title {
+        padding: 0 1rem;
+    }
+
+    .mainContent {
+        padding: 0 0.5rem 0 4.5rem;
+
+        ul.years {
+            padding: 1rem 0 0 0;
+        }
+    }
+
+    .artists {
+        margin-bottom: 0 !important;
+        .artist {
+            span {
+                text-align: left;
+            }
+
+            div {
+                flex-direction: row !important;
+
+                .artistInfo {
+                    margin-left: 1rem;
+                    display: flex;
+                    flex-direction: column !important;
+                    align-items: flex-start !important;
+                }
+            }
+        }
+    }
+}
