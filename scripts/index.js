@@ -3,7 +3,7 @@ import { getData, initParser, msToHours, parseDB } from "./parseDb.js";
 const ONE_REM = parseFloat(getComputedStyle(document.documentElement).fontSize);
 let YEARS = [];
 
-for(const x in [0, 1, 2, 3]) {
+for(const x in [...Array((new Date().getFullYear() - 2022) + 1).keys()]) {
     const date = new Date();
     date.setFullYear(date.getFullYear() - x, 0, 1);
     date.setHours(0, 0, 0, 0);
