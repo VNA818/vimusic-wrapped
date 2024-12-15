@@ -2,6 +2,7 @@ import { getData, initParser, msToHours, parseDB } from "./parseDb.js";
 
 const ONE_REM = parseFloat(getComputedStyle(document.documentElement).fontSize);
 let YEARS = [];
+const NOT_FOUND_IMG = "./assets/notFound.webp";
 
 for(const x in [...Array((new Date().getFullYear() - 2022) + 1).keys()]) {
     const date = new Date();
@@ -51,7 +52,7 @@ const addSong = (index, data) => {
     }
     song.appendChild(h1);
     const img = document.createElement("img");
-    img.src = data.thumbnailUrl?.replace("w60-h60-", "w120-h120-") ?? "./assets/notFound.webp";
+    img.src = data.thumbnailUrl?.replace("w60-h60-", "w120-h120-") ?? NOT_FOUND_IMG;
     img.alt = "Album Art";
     song.appendChild(img);
     const div = document.createElement("div");
@@ -88,7 +89,7 @@ const addArtist = (index, data) => {
     const artist = document.createElement("div");
 
     const img = document.createElement("img");
-    img.src = data.thumbnailUrl ?? "./assets/notFound.webp";
+    img.src = data.thumbnailUrl ?? NOT_FOUND_IMG;
     img.alt = "Artist Picture";
     artist.appendChild(img);
 
@@ -155,35 +156,49 @@ window.onload = async () => {
         const content = document.getElementById("contentData");
         const width = 750;
 
-        const sheet = Array.from(document.styleSheets).find(style => style.href.includes("/mobile.css"))
-        sheet.disabled = true;
-        content.style.width = `${width}px`;
-        content.classList.add("shareDiv");
+        try {
+            const sheet = Array.from(document.styleSheets).find(style => style.href.includes("/mobile.css"));
+            sheet.disabled = true;
+            content.style.width = `${width}px`;
+            content.classList.add("shareDiv");
 
-        htmlToImage.toJpeg(content, { skipFonts: true, width, height: content.scrollHeight - 3 * ONE_REM })
-            .then((uri) => {
-                const arr = uri.split(",");
-                let bstr = window.atob(arr[arr.length - 1]);
-                let n = bstr.length
-                const u8arr = new Uint8Array(n);
-                while (n--) {
-                    u8arr[n] = bstr.charCodeAt(n);
-                }
-                const file = new File([u8arr], "vimusic-wrapped.jpeg", { type: "image/jpeg" });
+            //fetch notfound image uri
+            const blob = await fetch(NOT_FOUND_IMG).then(r => r.blob());
+            const notFoundUri = await new Promise(res => {
+                const reader = new FileReader();
+                reader.onload = () => res(reader.result);
+                reader.readAsDataURL(blob);
+            });
 
-                sheet.disabled = false;
-                content.classList.remove("shareDiv");
-                content.style.width = `100%`;
-
-                navigator.share({
-                    files: [ file ]
-                });
-
-                showLoading(false);
+            htmlToImage.toJpeg(content, {
+                skipFonts: true,
+                width,
+                height: content.scrollHeight - 3 * ONE_REM,
+                imagePlaceholder: notFoundUri
             })
-            .catch((e) => {
-                console.error(e)
-            }) 
+                .then((uri) => {
+                    const arr = uri.split(",");
+                    let bstr = window.atob(arr[arr.length - 1]);
+                    let n = bstr.length
+                    const u8arr = new Uint8Array(n);
+                    while (n--) {
+                        u8arr[n] = bstr.charCodeAt(n);
+                    }
+                    const file = new File([u8arr], "vimusic-wrapped.jpeg", { type: "image/jpeg" });
+
+                    sheet.disabled = false;
+                    content.classList.remove("shareDiv");
+                    content.style.width = `100%`;
+
+                    navigator.share({
+                        files: [ file ]
+                    });
+
+                    showLoading(false);
+                });
+        } catch(err) {
+            console.log("Failed To Share", err);
+        }
     });
 
     document.getElementById("aboutBtn").addEventListener("click", () => {
