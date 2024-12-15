@@ -119,10 +119,12 @@ const fillData = (data) => {
     if(!data) {
         document.getElementById("contentData").style.display = "none";
         document.getElementById("noData").style.display = "flex";
+        document.getElementById("share").style.display = "none";
         return;
     }
     document.getElementById("noData").style.display = "none";
     document.getElementById("contentData").style.display = "block";
+    document.getElementById("share").style.display = "block";
 
     const songs = document.getElementById("songs");
     songs.innerHTML = "";
@@ -182,6 +184,16 @@ window.onload = async () => {
             .catch((e) => {
                 console.error(e)
             }) 
+    });
+
+    document.getElementById("aboutBtn").addEventListener("click", () => {
+        document.getElementById("about").showModal();
+    });
+
+    document.getElementById("about").addEventListener("click", (event) => {
+        if(event.target.id === "about") {
+            event.target.close();
+        }
     });
 
     document.getElementById("uploadFile").addEventListener("click", () => {

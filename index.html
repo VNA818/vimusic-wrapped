@@ -21,12 +21,29 @@
                 Upload Database
                 <input type="file" id="myFile" name="filename" accept=".db">
             </button>
+
+            <dialog id="about">
+                <div>
+                    <h2>About</h2>
+                    <p>ViMusic Wrapped lets you view listening stats for ViMusic (or ViMusic forks).</p>
+                    <p>
+                        <u>Notice:</u>
+                        <br>
+                        Some Databases such as ViTune contain personal account information. This website processes all databse data locally, no data is stored, and no external scripts are used.
+                    </p>
+                    <p>Feel free to checkout the code: <a href="https://github.com/VNA818/vimusic-wrapped">https://github.com/VNA818/vimusic-wrapped</a></p>
+                    <span><p>2024 <a href="https://vna818.github.io">VNA818</a></p></span>
+                </div>
+            </dialog>
+            <button id="aboutBtn" title="About" class="bottomButton">
+                <h2>?</h2>
+            </button>
         </div>
         <div id="loading">
             <div> </div>
         </div>
         <div class="mainContent" id="main">
-            <button id="share" title="Share">
+            <button id="share" title="Share" class="bottomButton">
                 <svg width="45px" height="45px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <g fill="white" fill-rule="nonzero">

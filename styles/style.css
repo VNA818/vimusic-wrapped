@@ -67,6 +67,10 @@ u {
     display: inline;
 }
 
+a {
+    color: inherit;
+}
+
 button {
     cursor: pointer;
     border: none;
@@ -90,6 +94,22 @@ button {
     }
     100% {
         background-position: 100% 0%;
+    }
+}
+
+.bottomButton {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 1rem;
+    right: 1rem;
+    background-color: var(--contentBg);
+    border-radius: 0.75rem;
+    padding-top: 0.2rem;
+    z-index: 2;
+
+    h2 {
+        margin: 0;
     }
 }
 
@@ -153,6 +173,36 @@ button {
     #myFile {
         display: none;
     }
+
+    #about:modal {
+        display: flex;
+    }
+
+    #about {
+        position: fixed;
+        z-index: 10;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: left;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: inherit;
+        border: none;
+        border-radius: 0.75rem;
+
+        div {
+            background-color: black;
+            max-width: 660px;
+            padding: 1rem;
+        }
+
+        span {
+            width: 100%;
+            text-align: center;
+        }
+    }
 }
 
 .mainContent {
@@ -161,18 +211,6 @@ button {
     height: 100%;
     flex-direction: row;
     padding: 0 0.5rem 0 8rem;
-
-    #share {
-        position: fixed;
-        width: 60px;
-        height: 60px;
-        bottom: 1rem;
-        right: 1rem;
-        background-color: var(--contentBg);
-        border-radius: 0.75rem;
-        padding-top: 0.2rem;
-        z-index: 2;
-    }
 
     ul.years {
         position: fixed;
